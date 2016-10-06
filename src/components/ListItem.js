@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
-import { View, TouchableWithoutFeedback, Text } from 'react-native';
+import {
+  View,
+  TouchableWithoutFeedback,
+  Text,
+  LayoutAnimation
+} from 'react-native';
 import { connect } from 'react-redux';
 
 import { CardSection } from './common';
 import * as actions from '../actions';
 
 class ListItem extends Component {
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
+  }
+
   renderDescription() {
     const { library, expanded } = this.props;
 
     if (expanded) {
       return (
-        <Text>{library.description}</Text>
+        <CardSection>
+          <Text style={styles.description}>
+            {library.description}
+          </Text>
+        </CardSection>
       );
     }
   }
@@ -38,7 +51,14 @@ const styles = {
   title: {
     fontSize: 18,
     paddingLeft: 15,
+    paddingRight: 15,
   },
+
+  description: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+  }
 };
 
 const mapStateToProps = (state, ownProps) => {
